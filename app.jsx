@@ -1928,7 +1928,7 @@ const tmStorage = {
   async get(key) {
     const res = await fetch(BACKEND_URL + "?key=" + encodeURIComponent(key) + "&initData=" + encodeURIComponent(TG_INIT_DATA));
     const data = await res.json();
-    if (data.error) { LAST_STORAGE_ERROR = data.error; console.error("tmStorage.get:", data.error); return null; }
+    if (data.error) { LAST_STORAGE_ERROR = data.error + (data.debug ? " | " + JSON.stringify(data.debug) : ""); console.error("tmStorage.get:", data.error, data.debug); return null; }
     LAST_STORAGE_ERROR = null;
     return (data.value !== null && data.value !== undefined && data.value !== "") ? { key: data.key, value: data.value } : null;
   },
