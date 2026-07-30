@@ -1,3 +1,5 @@
+if (typeof React === "undefined") { document.getElementById("root").innerHTML = "<div style='color:#FBF8F0;padding:20px;font-family:monospace;'>XATOLIK: React yuklanmadi (CDN muammosi bo'lishi mumkin)</div>"; throw new Error("React missing"); }
+if (typeof Recharts === "undefined") { document.getElementById("root").innerHTML = "<div style='color:#FBF8F0;padding:20px;font-family:monospace;'>XATOLIK: Recharts yuklanmadi (CDN muammosi bo'lishi mumkin)</div>"; throw new Error("Recharts missing"); }
 const { useState, useEffect, useMemo } = React;
 const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } = Recharts;
 
