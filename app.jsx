@@ -1777,6 +1777,11 @@ function HomeTab({ trades, plan, portfolioStats, dailyChecklist, onOpenPosCalc, 
   const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
   const isMonthEnd = dayOfMonth >= daysInMonth - 2;
 
+  useEffect(() => {
+    if (hasApiKey) onRefreshLive();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const computed = trades.map(computeTrade);
   const closed = computed.filter((c) => !c.isOpen);
   const wins = closed.filter((c) => c.isWin).length;
