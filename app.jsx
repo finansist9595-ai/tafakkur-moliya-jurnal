@@ -1258,7 +1258,7 @@ function StatsTab({ trades, capitalTx, portfolioStats, plan }) {
       const text = await callAIProxy(prompt);
       setAiText(text || "Tahlil olinmadi.");
     } catch (e) {
-      setAiError("AI tahlilni olishda xatolik yuz berdi. Birozdan so'ng qayta urinib ko'ring.");
+      setAiError("AI tahlilni olishda xatolik: " + (e.message || "noma'lum"));
     } finally {
       setAiLoading(false);
     }
@@ -1282,7 +1282,7 @@ function StatsTab({ trades, capitalTx, portfolioStats, plan }) {
       const parsed = JSON.parse(cleaned);
       setErrorRegistry(Array.isArray(parsed) ? parsed : []);
     } catch (e) {
-      setErrError("Xatolarni tahlil qilishda muammo yuz berdi. Birozdan so'ng qayta urinib ko'ring.");
+      setErrError("Xatolarni tahlil qilishda muammo: " + (e.message || "noma'lum"));
     } finally {
       setErrLoading(false);
     }
@@ -1957,7 +1957,7 @@ async function callAIProxy(prompt) {
     body: JSON.stringify({ action: "ai_proxy", prompt: prompt, initData: TG_INIT_DATA }),
   });
   const data = await res.json();
-  if (data.error) throw new Error(data.error);
+  if (data.error) throw new Error(data.error + (data.debug ? " | " + JSON.stringify(data.debug) : ""));
   return data.text;
 }
 
