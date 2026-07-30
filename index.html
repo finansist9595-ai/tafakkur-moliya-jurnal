@@ -24,6 +24,19 @@
     html, body { margin: 0; padding: 0; background: #0B2317; }
     #root { min-height: 100vh; }
   </style>
+
+  <script>
+    window.addEventListener("error", function (e) {
+      var root = document.getElementById("root");
+      if (root) {
+        root.innerHTML =
+          '<div style="color:#FBF8F0;background:#4a1f1f;padding:20px;font-family:monospace;font-size:13px;white-space:pre-wrap;">' +
+          "XATOLIK YUZ BERDI:\n\n" + (e.message || "noma'lum") +
+          "\n\nFayl: " + (e.filename || "-") + " Qator: " + (e.lineno || "-") +
+          "</div>";
+      }
+    });
+  </script>
 </head>
 <body>
   <div id="root">
