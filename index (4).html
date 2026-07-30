@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0B2317" />
+  <title>Tafakkur Moliya — Trading Jurnal</title>
+
+  <!-- Telegram Mini App rasmiy kutubxonasi -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- React 18 -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Recharts uchun zarur (PropTypes birinchi yuklanishi kerak) -->
+  <script src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+
+  <!-- JSX kodni brauzerning o'zida ishga tushirish uchun (build qadam kerak emas) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #0B2317; }
+    #root { min-height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div style="color: #B9C4BA; text-align: center; padding: 60px 20px; font-family: sans-serif;">
+      Yuklanmoqda...
+    </div>
+  </div>
+
+  <script type="text/babel" data-presets="react" src="app.jsx"></script>
+</body>
+</html>
