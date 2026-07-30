@@ -2166,11 +2166,7 @@ function TafakkurMoliyaJournal() {
       {authError && (
         <div style={{ margin: "0 16px 14px", background: "#4a1f1f", border: "1px solid " + COLORS.loss, borderRadius: 12, padding: 12 }}>
           <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.loss, marginBottom: 4 }}>⚠️ Serverga ulanishda muammo</div>
-          <div style={{ fontSize: 11, color: COLORS.cream }}>{authError}</div>
-          <div style={{ fontSize: 10, color: COLORS.creamDim, marginTop: 6, fontFamily: "monospace" }}>
-            tg mavjud: {tg ? "ha" : "yo'q"} | initData uzunligi: {TG_INIT_DATA ? TG_INIT_DATA.length : 0} | platform: {tg ? tg.platform : "-"} | version: {tg ? tg.version : "-"}
-          </div>
-          <div style={{ fontSize: 10, color: COLORS.creamDim, marginTop: 6 }}>Bu xabar chiqsa, ma'lumotlaringiz "yo'qolgan" emas — shunchaki bu safar server sizni tanimadi. Ilovani yopib qayta oching.</div>
+          <div style={{ fontSize: 11, color: COLORS.cream }}>Ilovani yopib, "t.me/..." havolasi orqali qayta oching.</div>
         </div>
       )}
       <div style={{ padding: "0 16px 20px" }}>
