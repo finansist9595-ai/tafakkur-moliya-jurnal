@@ -1780,7 +1780,7 @@ function HomeTab({ trades, plan, portfolioStats, dailyChecklist, onOpenPosCalc, 
   const computed = trades.map(computeTrade);
   const closed = computed.filter((c) => !c.isOpen);
   const wins = closed.filter((c) => c.isWin).length;
-  const winRate = closed.length ? (wins / closed.length) * 100 : 0;
+  const winRate = closed.length ? (wins / closed.length) * 100 : 50;
   const totalPL = closed.reduce((s, c) => s + c.profitUsd, 0);
   const openPositions = computed.filter((c) => c.isOpen);
   const checksDone = CHECKLIST_ITEMS.filter((it) => dailyChecklist.checks && dailyChecklist.checks[it.id]).length;
