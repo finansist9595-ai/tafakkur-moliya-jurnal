@@ -1922,11 +1922,14 @@ if (tg) {
 const TG_INIT_DATA = tg ? tg.initData : "";
 const TG_USER = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
 
+let LAST_STORAGE_ERROR = null;
+
 const tmStorage = {
   async get(key) {
     const res = await fetch(BACKEND_URL + "?key=" + encodeURIComponent(key) + "&initData=" + encodeURIComponent(TG_INIT_DATA));
     const data = await res.json();
-    if (data.error) { console.error("tmStorage.get:", data.error); return null; }
+    if (data.error) { LAST_STORAGE_ERROR = data.error; console.error("tmStorage.get:", data.error); return null; }
+    LAST_STORAGE_ERROR = null;
     return (data.value !== null && data.value !== undefined && data.value !== "") ? { key: data.key, value: data.value } : null;
   },
   async set(key, value) {
@@ -1967,6 +1970,7 @@ function useStorage() {
   const [settings, setSettings] = useState({ apiKey: "", apiSecret: "" });
   const [dailyChecklist, setDailyChecklist] = useState({ date: todayISO(), checks: {} });
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -1995,6 +1999,7 @@ function useStorage() {
       } catch (e) {
         console.error(e);
       } finally {
+        setAuthError(LAST_STORAGE_ERROR);
         setLoading(false);
       }
     })();
@@ -2029,11 +2034,11 @@ function useStorage() {
     tmStorage.set("tm_daily_checklist", JSON.stringify(next)).catch((e) => console.error(e));
   };
 
-  return { trades, persistTrades, plan, persistPlan, watchlist, persistWatchlist, currencyCosts, persistCurrencyCosts, capitalTx, persistCapitalTx, settings, persistSettings, dailyChecklist, persistDailyChecklist, loading };
+  return { trades, persistTrades, plan, persistPlan, watchlist, persistWatchlist, currencyCosts, persistCurrencyCosts, capitalTx, persistCapitalTx, settings, persistSettings, dailyChecklist, persistDailyChecklist, loading, authError };
 }
 
 function TafakkurMoliyaJournal() {
-  const { trades, persistTrades, plan, persistPlan, watchlist, persistWatchlist, currencyCosts, persistCurrencyCosts, capitalTx, persistCapitalTx, settings, persistSettings, dailyChecklist, persistDailyChecklist, loading } = useStorage();
+  const { trades, persistTrades, plan, persistPlan, watchlist, persistWatchlist, currencyCosts, persistCurrencyCosts, capitalTx, persistCapitalTx, settings, persistSettings, dailyChecklist, persistDailyChecklist, loading, authError } = useStorage();
   const [tab, setTab] = useState("home");
   const [showPosCalc, setShowPosCalc] = useState(false);
   const [showZakatCalc, setShowZakatCalc] = useState(false);
@@ -2158,6 +2163,13 @@ function TafakkurMoliyaJournal() {
         @keyframes tm-spin-kf { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       `}</style>
       <Header />
+      {authError && (
+        <div style={{ margin: "0 16px 14px", background: "#4a1f1f", border: "1px solid " + COLORS.loss, borderRadius: 12, padding: 12 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.loss, marginBottom: 4 }}>⚠️ Serverga ulanishda muammo</div>
+          <div style={{ fontSize: 11, color: COLORS.cream }}>{authError}</div>
+          <div style={{ fontSize: 10, color: COLORS.creamDim, marginTop: 6 }}>Bu xabar chiqsa, ma'lumotlaringiz "yo'qolgan" emas — shunchaki bu safar server sizni tanimadi. Ilovani yopib qayta oching.</div>
+        </div>
+      )}
       <div style={{ padding: "0 16px 20px" }}>
         {tab === "home" && (
           <HomeTab
